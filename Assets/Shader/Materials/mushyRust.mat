@@ -7,12 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sand
+  m_Name: mushyRust
   m_Shader: {fileID: -6465566751694194690, guid: 1333075fbb847914ab8a8693c7214013,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -21,17 +21,17 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: dea0253d711738c478c7658b017dfd31, type: 3}
+        m_Texture: {fileID: 2800000, guid: 008b5d90fbe9c22498c941efecfc56ec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 4e9043f1e7b11a6418fea4632b8d70fd, type: 3}
+        m_Texture: {fileID: 2800000, guid: d2ecb0ca1a6207645b1fb84b1311b6a9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Blend: 1
     - _NormalPower: 1
-    - _Smoothness: 0.5
-    - _Tile: 0.03
+    - _Smoothness: 0.619
+    - _Tile: 0.12
     m_Colors:
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Tint: {r: 0.6320754, g: 0.58623904, b: 0.45616764, a: 1}

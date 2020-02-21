@@ -7,8 +7,8 @@ public class Movement : MonoBehaviour
     public Vector3 inputDirection;
     public float input;
 
-    public float speed;
-    public float turn;
+    public float speed=1f;
+    public float turnX=1f,turnY=1f;
     Rigidbody rigid;
 
     void Start()
@@ -20,6 +20,6 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         rigid.AddForce(rigid.transform.forward * speed * input);
-        rigid.AddTorque((Vector3.up * inputDirection.x + rigid.transform.right * inputDirection.y) * turn);
+        rigid.AddTorque(Vector3.up * inputDirection.x *turnX + rigid.transform.right * inputDirection.y * turnY);
     }
 }
