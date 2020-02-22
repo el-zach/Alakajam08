@@ -33,7 +33,7 @@ public class PlayerControls : MonoBehaviour
 
     Movement move;
 
-    public Axis horizontal, vertical;
+    public Axis horizontal, vertical, fire;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +49,7 @@ public class PlayerControls : MonoBehaviour
     {
         horizontal.Compute();
         vertical.Compute();
+        fire.Compute();
         move.inputDirection = Vector3.right * horizontal.output + Vector3.up * vertical.output;
         move.inputBoost = Input.GetAxis("Jump");
     }
