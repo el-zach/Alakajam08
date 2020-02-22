@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public Vector3 inputDirection;
-    public float input;
+    public float boost;
 
     public float speed=1f;
     public float turnX=1f,turnY=1f;
@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rigid.AddForce(rigid.transform.forward * speed * input);
+        rigid.AddForce(rigid.transform.forward * speed * boost);
         rigid.AddTorque(Vector3.up * inputDirection.x *turnX + rigid.transform.right * inputDirection.y * turnY);
     }
 }

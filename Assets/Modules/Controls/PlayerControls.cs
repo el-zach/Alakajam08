@@ -11,12 +11,13 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         move = GetComponent<Movement>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
         move.inputDirection = Vector3.right * Input.GetAxis("Horizontal") + Vector3.up * Input.GetAxis("Vertical");
-        move.input = Input.GetAxis("Jump");
+        move.boost = Input.GetAxis("Jump");
     }
 }
