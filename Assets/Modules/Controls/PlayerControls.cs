@@ -16,6 +16,11 @@ public class PlayerControls : MonoBehaviour
         public float oldValue;
         public InputEvent OnDown, OnUp, OnPressed;
 
+        public Axis(string _name)
+        {
+            name = _name;
+        }
+
         public void Compute()
         {
             output = Input.GetAxis(name);
@@ -33,7 +38,7 @@ public class PlayerControls : MonoBehaviour
 
     Movement move;
 
-    public Axis horizontal, vertical, fire;
+    public Axis horizontal, vertical, fire, fire2 = new Axis("Fire2");
 
     // Start is called before the first frame update
     void Start()
