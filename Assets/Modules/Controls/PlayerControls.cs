@@ -40,6 +40,7 @@ public class PlayerControls : MonoBehaviour
     {
         move = GetComponent<Movement>();
         horizontal.OnDown.AddListener(move.SideBoost);
+        vertical.OnDown.AddListener(move.StartBoost);
         Cursor.lockState = CursorLockMode.Locked;
     }
 
