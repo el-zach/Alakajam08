@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefab;
 
     public float radius = 10f;
 
@@ -15,6 +15,8 @@ public class Spawner : MonoBehaviour
     public Vector2 enemyHealth = new Vector2(125f, 3000f);
 
     public float spawnTime = 1f;
+    public int maximumFish = 50;
+    public int currentFish = 0;
 
     private void Start()
     {
@@ -24,7 +26,8 @@ public class Spawner : MonoBehaviour
     IEnumerator RepeatedSpawning()
     {
         yield return new WaitForSeconds(spawnTime);
-        SpawnFishAt(Random.insideUnitSphere * radius + transform.position);
+        if(currentFish<maximumFish)
+            SpawnFishAt(Random.insideUnitSphere * radius + transform.position);
         StartCoroutine(RepeatedSpawning());
     }
 
@@ -33,7 +36,7 @@ public class Spawner : MonoBehaviour
     public void SpawnFishAt(Vector3 pos)
     {
         if (pos.y <= -60f) pos.y = -58f;
-        GameObject clone =Instantiate(enemyPrefab, pos, Quaternion.identity);
+        GameObject clone =Instantiate(enemyPrefab[Random.Range(0,enemyPrefab.Length)], pos, Quaternion.identity);
         BotControls bot = clone.GetComponentInChildren<BotControls>();
         //bot.
         Movement move = clone.GetComponentInChildren<Movement>();
@@ -46,6 +49,9 @@ public class Spawner : MonoBehaviour
 
         Health health = clone.GetComponentInChildren<Health>();
         health.health = Mathf.FloorToInt(mod + (enemyHealth.y-enemyHealth.x)+enemyHealth.x );
+
+        currentFish++;
+        health.OnDeath.AddListener(() => currentFish--);
     }
 
     private void OnDrawGizmosSelected()

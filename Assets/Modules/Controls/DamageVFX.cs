@@ -6,6 +6,7 @@ public class DamageVFX : MonoBehaviour
 {
     public static DamageVFX Instance;
     public ParticleSystem deathFX;
+    public AudioSource deathAudioSource;
     private void Awake()
     {
         Instance = this;
@@ -30,7 +31,8 @@ public class DamageVFX : MonoBehaviour
 
     public static void DeathAt(Vector3 pos, Vector3 normal)
     {
-        
+        Instance.deathAudioSource.pitch = Random.Range(0.9f, 1.1f);
+        Instance.deathAudioSource.PlayOneShot(Instance.deathAudioSource.clip);
         // emitParams.rotation = Random.Range(0f, 45f);
         // emitParams.velocity = normal * 0.1f;
 
