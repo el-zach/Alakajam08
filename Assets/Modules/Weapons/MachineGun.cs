@@ -17,6 +17,7 @@ public class MachineGun : MonoBehaviour
     {
         if (active)
         {
+            RotateToMousePosition();
             timer += Time.deltaTime;
             animator.speed = animatorSpeed;
             if (timer > putAwayTime)
@@ -24,6 +25,14 @@ public class MachineGun : MonoBehaviour
                 animator.SetBool("Visible", false);
             }
         }
+    }
+
+    Camera main;
+    void RotateToMousePosition()
+    {
+        if (!main) main = Camera.main;
+        Ray ray =main.ScreenPointToRay(Input.mousePosition);
+        transform.rotation = Quaternion.LookRotation(ray.GetPoint(100f) - transform.position);
     }
 
     public void PullTrigger()
@@ -45,11 +54,17 @@ public class MachineGun : MonoBehaviour
             {
                 int dmg = health.Damage(Random.Range((int)damage.x, (int)damage.y));
                 UserInterface.RenderDamageNumbers(dmg, hit.point);
+                DamageVFX.DamageAt(hit.point, hit.normal);
             }
         }
     }
-
-    
+    public AudioSource gunSound;
+    public Vector2 gunPitch = new Vector2(0.8f, 1.2f);
+    public void PlayShotSound()
+    {
+        gunSound.pitch = Random.Range(gunPitch.x, gunPitch.y);
+        gunSound.Play();
+    }
 
     public void Activate()
     {

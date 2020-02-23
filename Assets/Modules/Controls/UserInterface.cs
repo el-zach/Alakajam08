@@ -15,7 +15,10 @@ public class UserInterface : MonoBehaviour
             Vector2 screenPos = UserInterface.main.WorldToScreenPoint(pos);
             Vector3 canvasPos = new Vector3(screenPos.x / Screen.width * 1920, screenPos.y / Screen.height * 1080, 0f);
             go = Instantiate(Instance.dmgNumber, screenPos, Quaternion.identity, canvas);
-            go.GetComponent<UnityEngine.UI.Text>().text = value.ToString();
+            UnityEngine.UI.Text txt = go.GetComponent<UnityEngine.UI.Text>();
+            txt.text = value.ToString();
+            if (value == 0) txt.color = Color.gray;
+            txt.fontSize =Mathf.FloorToInt(txt.fontSize* Random.Range(0.9f, 1.2f));
             timeOfCreation = Time.time;
             direction = Random.insideUnitCircle;
         }

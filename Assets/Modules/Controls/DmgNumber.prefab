@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1987902122793931611}
   - component: {fileID: 4886195073710479695}
   m_Layer: 5
-  m_Name: Text
+  m_Name: DmgNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,10 +65,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: abddda03564d35048920a9828952e796, type: 3}
-    m_FontSize: 51
+    m_FontSize: 27
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 72
     m_Alignment: 4
     m_AlignByGeometry: 0
