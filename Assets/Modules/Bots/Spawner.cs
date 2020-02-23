@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    [System.Serializable]
+    public class KillMessages
+    {
+        public string[] messages;
+        public int threshold = 10;
+    }
+
     public GameObject[] enemyPrefab;
 
     public float radius = 10f;
@@ -18,8 +26,19 @@ public class Spawner : MonoBehaviour
     public int maximumFish = 50;
     public int currentFish = 0;
 
+    public int killedFish = 0;
+    public KillMessages[] killMessages;
+
+    public TextMeshProUGUI messageText, killCount;
+
     private void Start()
     {
+        foreach(var fish in FindObjectsOfType<BotControls>())
+        {
+            fish.GetComponentInChildren<Health>().OnDeath.AddListener(FishDeath);
+            currentFish++;
+        }
+
         StartCoroutine(RepeatedSpawning());
     }
 
@@ -51,12 +70,27 @@ public class Spawner : MonoBehaviour
         health.health = Mathf.FloorToInt(mod + (enemyHealth.y-enemyHealth.x)+enemyHealth.x );
 
         currentFish++;
-        health.OnDeath.AddListener(() => currentFish--);
+        health.OnDeath.AddListener(FishDeath);
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    void FishDeath()
+    {
+        currentFish--;
+        killedFish++;
+        killCount.text = killedFish.ToString();
+        for(int i = 0; i < killMessages.Length; i++)
+        {
+            if(killedFish < killMessages[i].threshold)
+            {
+                messageText.text = killMessages[i].messages[Random.Range(0, killMessages[i].messages.Length)];
+                return;
+            }
+        }
     }
 
 }
