@@ -61,4 +61,15 @@ public class BotControls : MonoBehaviour
             chaseTarget = other.attachedRigidbody.transform;
         }
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        foreach(var contact in collision.contacts)
+        {
+            if (contact.otherCollider.attachedRigidbody && contact.otherCollider.attachedRigidbody.CompareTag("Player"))
+            {
+                contact.otherCollider.GetComponent<Health>().Damage(1);
+            }
+        }
+    }
 }

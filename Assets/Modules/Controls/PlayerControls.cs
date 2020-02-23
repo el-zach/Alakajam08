@@ -60,4 +60,14 @@ public class PlayerControls : MonoBehaviour
         move.inputBoost = Input.GetAxis("Jump");
     }
 
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void RestartScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
 }
