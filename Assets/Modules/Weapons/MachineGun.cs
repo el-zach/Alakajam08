@@ -11,6 +11,7 @@ public class MachineGun : MonoBehaviour
     public float animatorSpeed = 1f;
     public float timer;
     public Transform muzzle;
+    public LayerMask shotLayer;
     public Vector2 damage = Vector2.one;
 
     private void Update()
@@ -48,13 +49,15 @@ public class MachineGun : MonoBehaviour
     public void CalculateShot()
     {
         RaycastHit hit;
-        if(Physics.Raycast(muzzle.transform.position, muzzle.transform.forward,out hit)){
+        if(Physics.Raycast(muzzle.transform.position, muzzle.transform.forward,out hit,Mathf.Infinity,shotLayer))
+        {
+            //Debug.Log("hit Somehing: " + hit.collider.gameObject.name, hit.collider);
             Health health = hit.collider.GetComponent<Health>();
             if (health)
             {
                 int dmg = health.Damage(Random.Range((int)damage.x, (int)damage.y));
                 UserInterface.RenderDamageNumbers(dmg, hit.point);
-                DamageVFX.DamageAt(hit.point, hit.normal);
+                DamageVFX.DamageAt(hit.point, hit.normal, health.bleedColor);
             }
         }
     }

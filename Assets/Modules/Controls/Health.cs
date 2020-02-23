@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     public int health=1000;
     public float damageMultiplier = 1f;
     public GameObject destroyOnDeath;
+    public Color bleedColor = Color.white;
     public FloatEvent OnDamage;
     public UnityEvent OnDeath;
 
@@ -20,11 +21,16 @@ public class Health : MonoBehaviour
         OnDamage.Invoke(value);
         health -= value;
         if (health <= 0)
-        {
-            OnDeath.Invoke();
-            if (destroyOnDeath) Destroy(destroyOnDeath);
-        }
+            Death();
+        //Debug.Log("Got damaged for " + value);
         return value;
+    }
+
+    void Death()
+    {
+        OnDeath.Invoke();
+        if (destroyOnDeath) Destroy(destroyOnDeath);
+        DamageVFX.DeathAt(transform.position,-transform.forward);
     }
 
 

@@ -16,14 +16,49 @@ public class BotControls : MonoBehaviour
     void Start()
     {
         move = GetComponent<Movement>();
+        curvingAxis = Random.onUnitSphere;
+        if (!chaseTarget) StartCoroutine(RandomCurveTimed(Random.Range(3f, 12f)));
     }
 
     // Update is called once per frame
     void Update()
     {
-        lookTarget.rotation = Quaternion.LookRotation((chaseTarget.position- transform.position).normalized);
-        //Vector3 chasing = lookTarget.rotation*(chaseTarget.position - transform.position);
-        //move.inputDirection = new Vector3(chasing.x,chasing.z,0f).normalized;
-        move.inputDirection.y = Mathf.Clamp(Vector3.Distance(transform.position, chaseTarget.position),-1f,1f);
+        if (chaseTarget) Chasing();
+        else Curves();
+    }
+
+    void Chasing()
+    {
+        Vector3 dir = chaseTarget.position - transform.position;
+        lookTarget.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        move.inputDirection.y = 1f;
+    }
+
+    Vector3 curvingAxis = Vector3.up;
+    //Vector3 targetCurvingAxis = Vector3.up;
+    void Curves()
+    {
+        //curvingAxis = Vector3.Lerp(curvingAxis, targetCurvingAxis, Time.deltaTime );
+        lookTarget.Rotate(curvingAxis, Time.deltaTime * 2f);
+        move.inputDirection.y = 0.5f;
+    }
+
+    IEnumerator RandomCurveTimed(float t)
+    {
+        yield return new WaitForSeconds(t);
+
+        if (!chaseTarget)
+        {
+            curvingAxis = Random.onUnitSphere;
+            StartCoroutine(RandomCurveTimed(Random.Range(3f, 12f)));
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.attachedRigidbody && other.attachedRigidbody.CompareTag("Player"))
+        {
+            chaseTarget = other.attachedRigidbody.transform;
+        }
     }
 }
