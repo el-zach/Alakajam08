@@ -8,6 +8,7 @@ public class UserInterface : MonoBehaviour
     {
         public GameObject go;
         public float timeOfCreation;
+        Vector2 direction;
 
         public DamageNumber(int value, Vector3 pos)
         {
@@ -16,10 +17,12 @@ public class UserInterface : MonoBehaviour
             go = Instantiate(Instance.dmgNumber, screenPos, Quaternion.identity, canvas);
             go.GetComponent<UnityEngine.UI.Text>().text = value.ToString();
             timeOfCreation = Time.time;
+            direction = Random.insideUnitCircle;
         }
 
         public bool Update()
         {
+            go.transform.Translate(direction * Time.deltaTime * Instance.numberSpeed);
             if (Time.time - timeOfCreation > Instance.numberTime)
             {
                 Destroy(go);
@@ -35,6 +38,7 @@ public class UserInterface : MonoBehaviour
     static Camera main;
     static Transform canvas;
     public float numberTime = 0.6f;
+    public float numberSpeed = 3f;
     public static UserInterface Instance;
 
     static List<DamageNumber> numbers = new List<DamageNumber>();
