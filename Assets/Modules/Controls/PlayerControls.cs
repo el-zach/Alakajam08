@@ -55,6 +55,7 @@ public class PlayerControls : MonoBehaviour
         horizontal.Compute();
         vertical.Compute();
         fire.Compute();
+        fire2.Compute();
         move.inputDirection = Vector3.right * horizontal.output + Vector3.up * vertical.output;
         move.inputBoost = Input.GetAxis("Jump");
     }

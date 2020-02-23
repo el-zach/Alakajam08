@@ -9,7 +9,9 @@ public class MachineGun : MonoBehaviour
     public float cooldown = 0.1f;
     public float putAwayTime = 3f;
     public float animatorSpeed = 1f;
-    float timer;
+    public float timer;
+    public Transform muzzle;
+    public Vector2 damage = Vector2.one;
 
     private void Update()
     {
@@ -17,22 +19,37 @@ public class MachineGun : MonoBehaviour
         {
             timer += Time.deltaTime;
             animator.speed = animatorSpeed;
+            if (timer > putAwayTime)
+            {
+                animator.SetBool("Visible", false);
+            }
         }
     }
 
     public void PullTrigger()
     {
-        if(timer > cooldown)
+        if (timer > cooldown)
         {
             animator.SetBool("Visible", true);
             animator.SetTrigger("Shot");
             timer = 0f;
         }
-        if(timer > putAwayTime)
-        {
-            animator.SetBool("Visible", false);
+    }
+
+    public void CalculateShot()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(muzzle.transform.position, muzzle.transform.forward,out hit)){
+            Health health = hit.collider.GetComponent<Health>();
+            if (health)
+            {
+                int dmg = health.Damage(Random.Range((int)damage.x, (int)damage.y));
+                UserInterface.RenderDamageNumbers(dmg, hit.point);
+            }
         }
     }
+
+    
 
     public void Activate()
     {

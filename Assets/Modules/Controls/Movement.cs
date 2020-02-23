@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour
     [Header("Runtime")]
     public Vector3 inputDirection;
     public float inputBoost;
+    public bool inputRecenter = false;
 
     Rigidbody rigid;
     
@@ -31,7 +32,7 @@ public class Movement : MonoBehaviour
         rigid.AddForce(lookTransform.forward * inputDirection.y * speed);
         rigid.AddForce(lookTransform.right * inputDirection.x * sideSpeed);
         
-        if(inputDirection.sqrMagnitude>0.1f)
+        if(inputDirection.sqrMagnitude>0.1f || inputRecenter)
             RotateTowards();
     }
 
@@ -42,7 +43,15 @@ public class Movement : MonoBehaviour
 
     public void StartBoost(float value)
     {
-        rigid.AddForce(lookTransform.forward * (value > 0f ? 1f : -1f) * startBoost, ForceMode.Impulse);
+        if(Mathf.Abs(value) <1f)
+            rigid.AddForce(lookTransform.forward * (value > 0f ? 1f : -1f) * startBoost, ForceMode.Impulse);
+        else
+            rigid.AddForce(lookTransform.forward * value, ForceMode.Impulse);
+    }
+
+    public void Recenter(bool value)
+    {
+        inputRecenter = value;
     }
 
     //void OldMovement()
