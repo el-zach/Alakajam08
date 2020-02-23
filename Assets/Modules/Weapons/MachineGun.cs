@@ -31,7 +31,7 @@ public class MachineGun : MonoBehaviour
     void RotateToMousePosition()
     {
         if (!main) main = Camera.main;
-        Ray ray =main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = new Ray(main.transform.position, main.transform.forward); //main.ScreenPointToRay(Input.mousePosition);
         transform.rotation = Quaternion.LookRotation(ray.GetPoint(100f) - transform.position);
     }
 

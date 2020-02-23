@@ -22,7 +22,7 @@ public class DamageVFX : MonoBehaviour
         var emitParams = new ParticleSystem.EmitParams();
         emitParams.position = pos;
         emitParams.rotation = Random.Range(0f, 45f);
-        emitParams.velocity = normal * 10f;
+        emitParams.velocity = normal * 1f;
         Instance.pSys.Emit(emitParams, 3);
     }
 }

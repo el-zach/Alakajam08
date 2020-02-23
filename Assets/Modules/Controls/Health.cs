@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
 
     public int health=1000;
     public float damageMultiplier = 1f;
-
+    public GameObject destroyOnDeath;
     public FloatEvent OnDamage;
     public UnityEvent OnDeath;
 
@@ -20,7 +20,10 @@ public class Health : MonoBehaviour
         OnDamage.Invoke(value);
         health -= value;
         if (health <= 0)
+        {
             OnDeath.Invoke();
+            if (destroyOnDeath) Destroy(destroyOnDeath);
+        }
         return value;
     }
 
